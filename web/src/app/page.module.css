@@ -1,0 +1,107 @@
+.page {
+  display: grid;
+  min-height: calc(100vh - 120px);
+  place-items: center;
+  padding: 32px 16px;
+}
+
+.main {
+  width: min(100%, 560px);
+  display: grid;
+  gap: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 32px;
+  background: #fff;
+  color: #111827;
+}
+
+.intro {
+  display: grid;
+  gap: 12px;
+}
+
+.label {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.intro h1 {
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.intro p {
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.error {
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+  line-height: 1.6;
+}
+
+.ctas {
+  display: grid;
+  gap: 12px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border-radius: 8px;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.secondary {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #111827;
+}
+
+.details {
+  display: grid;
+  gap: 12px;
+}
+
+.details div {
+  display: grid;
+  gap: 4px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+}
+
+.details dt {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.details dd {
+  overflow-wrap: anywhere;
+  color: #111827;
+  line-height: 1.5;
+}
+
+@media (width <= 520px) {
+  .main {
+    padding: 24px;
+  }
+}

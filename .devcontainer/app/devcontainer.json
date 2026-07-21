@@ -1,0 +1,25 @@
+{
+  "name": "sandbox",
+  "dockerComposeFile": [
+    "../compose.yml",
+    "./compose.devcontainer.yml"
+  ],
+  "service": "api",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "usernamehw.errorlens",
+        "christian-kohler.path-intellisense",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "oxc.oxc-vscode",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "onCreateCommand": "go mod tidy && go mod download"
+}

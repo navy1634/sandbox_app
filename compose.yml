@@ -1,0 +1,82 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    container_name: sandbox-app-web-container
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=${SANDBOX_API_URL:-http://localhost:8080}
+      - NEXT_PUBLIC_AUTH_APP_BASE_URL=${SANDBOX_AUTH_APP_URL:-http://localhost:3000}
+      - NEXT_PUBLIC_APP_RETURN_URL=${SANDBOX_FRONTEND_URL:-http://localhost:3000}/dashboard
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - pnpm-store:/pnpm/store
+    ports:
+      - 3000:3000
+    working_dir: /app
+    command: bash -c "pnpm install --frozen-lockfile && pnpm run dev"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: sandbox-app-api-container
+    env_file:
+      - ./api/.env.local
+    environment:
+      - ADDR=:8080
+      - FRONTEND_URL=${SANDBOX_FRONTEND_URL:-http://localhost:3000}
+      - AUTH_SERVER_URL=${SANDBOX_AUTH_SERVER_URL:-http://host.docker.internal:8080}
+      - DATABASE_URL=${SANDBOX_APP_DATABASE_URL:-postgres://postgres:password@db:5432/test?sslmode=disable}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - 8080:8080
+
+  migrate:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.migrate
+    container_name: sandbox-app-migrate-container
+    environment:
+      - DATABASE_URL=${SANDBOX_APP_DATABASE_URL:-postgres://postgres:password@db:5432/test?sslmode=disable}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["postgres", "${SANDBOX_APP_DATABASE_URL:-postgres://postgres:password@db:5432/test?sslmode=disable}", "up"]
+
+  wiremock:
+    image: wiremock/wiremock:3.9.1
+    container_name: sandbox-app-wiremock-container
+    profiles:
+      - mock
+    volumes:
+      - ./wiremock:/home/wiremock
+    ports:
+      - 8080:8080
+    command: ["--global-response-templating", "--verbose"]
+
+  db:
+    image: postgres:17.1
+    container_name: sandbox-app-db-container
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d test"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pnpm-store:
+    name: pnpm-store
+  database:
+    name: postgresql_initial_data

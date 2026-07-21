@@ -1,0 +1,9 @@
+allowBuilds:
+  esbuild: false
+  sharp: false
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
+minimumReleaseAge: 4320
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false

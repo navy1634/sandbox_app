@@ -1,0 +1,26 @@
+{
+  "name": "sandbox",
+  "dockerComposeFile": [
+    "../compose.yml",
+    "./compose.devcontainer.yml"
+  ],
+  "service": "web",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oxc.oxc-vscode",
+        "stylelint.vscode-stylelint",
+        "usernamehw.errorlens",
+        "christian-kohler.path-intellisense",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "oxc.oxc-vscode",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "onCreateCommand": "pnpm install --frozen-lockfile"
+}

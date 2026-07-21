@@ -1,0 +1,52 @@
+{
+  "name": "sandbox_nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start",
+    "lint": "pnpm lint:js && pnpm lint:css",
+    "lint:js": "oxlint --fix .",
+    "lint:css": "stylelint \"**/*.css\" --fix",
+    "lint:check": "oxlint . && stylelint \"**/*.css\"",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check src",
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "^13.3.0",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-markdown": "^10.1.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-a11y": "^10.5.2",
+    "@storybook/addon-docs": "^10.5.2",
+    "@storybook/addon-onboarding": "^10.5.2",
+    "@storybook/addon-vitest": "^10.5.2",
+    "@storybook/nextjs-vite": "^10.5.2",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.10",
+    "babel-plugin-react-compiler": "1.0.0",
+    "oxfmt": "0.58.0",
+    "oxlint": "1.73.0",
+    "playwright": "^1.61.1",
+    "storybook": "^10.5.2",
+    "stylelint": "17.14.0",
+    "stylelint-config-standard": "40.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  },
+  "packageManager": "pnpm@11.15.1"
+}
