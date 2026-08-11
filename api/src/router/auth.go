@@ -120,6 +120,7 @@ func (p authProxy) forward(c *gin.Context, method string, path string) (*http.Re
 		return nil, err
 	}
 	req.Header.Set("Cookie", c.GetHeader("Cookie"))
+	req.Header.Set("Origin", c.GetHeader("Origin"))
 	return p.client.Do(req)
 }
 

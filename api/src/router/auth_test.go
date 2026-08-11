@@ -37,5 +37,7 @@ func TestAuthProxyForwardPreservesCookieAndOrigin(t *testing.T) {
 	if err != nil {
 		t.Fatalf("forward() error = %v", err)
 	}
-	defer response.Body.Close()
+	defer func() {
+		_ = response.Body.Close()
+	}()
 }
