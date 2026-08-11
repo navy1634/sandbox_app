@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sandbox-app-api-config
+data:
+  ADDR: ":8080"
+  FRONTEND_URL: "https://app.sandbox.navy1634.com"
+  AUTH_SERVER_URL: "http://sandbox-auth-api.sandbox-auth.svc.cluster.local:8080"

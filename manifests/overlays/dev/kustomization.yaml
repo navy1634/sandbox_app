@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sandbox-app
+resources:
+  - api-configmap.yaml
+  - database-persistentvolume.yaml
+  - ingress.yaml
+  - namespace.yaml
+  - web-configmap.yaml
+  - ../../base
+images:
+  - name: sandbox-app-api
+    newName: localhost:5000/sandbox_app-api
+    newTag: latest
+  - name: sandbox-app-web
+    newName: localhost:5000/sandbox_app-web
+    newTag: latest

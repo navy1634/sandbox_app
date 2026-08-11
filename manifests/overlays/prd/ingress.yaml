@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sandbox-app
+  labels:
+    app.kubernetes.io/name: sandbox-app
+    app.kubernetes.io/part-of: sandbox-app
+spec:
+  tls:
+    - hosts:
+        - app.example.com
+      secretName: sandbox-app-tls
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /me
+            pathType: Prefix
+            backend:
+              service:
+                name: sandbox-app-api
+                port:
+                  number: 8080
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: sandbox-app-api
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sandbox-app-web
+                port:
+                  number: 3000

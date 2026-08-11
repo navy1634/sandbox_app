@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sandbox-app-web-config
+data:
+  NEXT_PUBLIC_API_BASE_URL: ""
+  NEXT_PUBLIC_AUTH_APP_BASE_URL: "https://auth.example.com"
+  NEXT_PUBLIC_APP_RETURN_URL: "https://app.example.com/dashboard"

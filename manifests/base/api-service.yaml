@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sandbox-app-api
+  labels:
+    app.kubernetes.io/name: sandbox-app-api
+    app.kubernetes.io/part-of: sandbox-app
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: sandbox-app-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
