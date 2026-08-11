@@ -4,6 +4,8 @@ import "./globals.css";
 import Footer from "@/components/Footer/components";
 import Header from "@/components/Header/components";
 import type { NavbarItem } from "@/components/Navbar/components";
+import { createRuntimeConfig } from "./runtimeConfig";
+import { RuntimeConfigProvider } from "./runtimeConfigContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +22,8 @@ export const metadata: Metadata = {
   description: "sandbox_auth SSO を試すための簡易アプリです",
 };
 
+export const dynamic = "force-dynamic";
+
 const navItems: NavbarItem[] = [
   { href: "/", label: "ホーム" },
   { href: "/dashboard", label: "ダッシュボード" },
@@ -30,12 +34,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const runtimeConfig = createRuntimeConfig(process.env);
+
   return (
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <Header navItems={navItems} /> {/* Headerコンポーネント*/}
-        <main className="p-4">{children}</main>
-        <Footer /> {/* Footerコンポーネント*/}
+        <RuntimeConfigProvider value={runtimeConfig}>
+          <Header navItems={navItems} /> {/* Headerコンポーネント*/}
+          <main className="p-4">{children}</main>
+          <Footer /> {/* Footerコンポーネント*/}
+        </RuntimeConfigProvider>
       </body>
     </html>
   );

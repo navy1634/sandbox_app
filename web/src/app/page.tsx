@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { authAppLoginURL } from "@/app/authTypes";
+import { useRuntimeConfig } from "@/app/runtimeConfigContext";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const runtimeConfig = useRuntimeConfig();
+
   function login() {
-    window.location.href = authAppLoginURL();
+    window.location.href = authAppLoginURL(runtimeConfig);
   }
 
   return (

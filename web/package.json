@@ -6,6 +6,7 @@
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run --config vitest.unit.config.ts",
     "lint": "pnpm lint:js && pnpm lint:css",
     "lint:js": "oxlint --fix .",
     "lint:css": "stylelint \"**/*.css\" --fix",

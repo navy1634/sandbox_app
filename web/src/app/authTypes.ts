@@ -1,3 +1,5 @@
+import type { RuntimeConfig } from "./runtimeConfig";
+
 export type Account = {
   id: number;
   identity?: {
@@ -36,20 +38,14 @@ export type MeResponse = {
   };
 };
 
-export const apiBaseURL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
-
-export const authAppBaseURL =
-  process.env.NEXT_PUBLIC_AUTH_APP_BASE_URL ?? "http://localhost:3000";
-
-export function appReturnURL() {
-  if (process.env.NEXT_PUBLIC_APP_RETURN_URL) {
-    return process.env.NEXT_PUBLIC_APP_RETURN_URL;
+export function appReturnURL(runtimeConfig: RuntimeConfig) {
+  if (runtimeConfig.appReturnURL) {
+    return runtimeConfig.appReturnURL;
   }
 
   return `${window.location.origin}/dashboard`;
 }
 
-export function authAppLoginURL() {
-  return `${authAppBaseURL}/login?redirect_to=${encodeURIComponent(appReturnURL())}`;
+export function authAppLoginURL(runtimeConfig: RuntimeConfig) {
+  return `${runtimeConfig.authAppBaseURL}/login?redirect_to=${encodeURIComponent(appReturnURL(runtimeConfig))}`;
 }

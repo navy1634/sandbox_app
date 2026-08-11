@@ -1,21 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { apiBaseURL, authAppLoginURL, type MeResponse } from "@/app/authTypes";
+import { authAppLoginURL, type MeResponse } from "@/app/authTypes";
+import { useRuntimeConfig } from "@/app/runtimeConfigContext";
 import styles from "../page.module.css";
 
 export default function DashboardPage() {
   const [me, setMe] = useState<MeResponse | null>(null);
+  const runtimeConfig = useRuntimeConfig();
 
   useEffect(() => {
-    void fetch(`${apiBaseURL}/me`, { credentials: "include" })
+    void fetch(`${runtimeConfig.apiBaseURL}/me`, { credentials: "include" })
       .then((response) => response.json() as Promise<MeResponse>)
       .then(setMe)
       .catch(() => setMe({ authenticated: false }));
-  }, []);
+  }, [runtimeConfig.apiBaseURL]);
 
   async function logout() {
-    await fetch(`${apiBaseURL}/auth/logout`, {
+    await fetch(`${runtimeConfig.apiBaseURL}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });
@@ -23,7 +25,7 @@ export default function DashboardPage() {
   }
 
   function login() {
-    window.location.href = authAppLoginURL();
+    window.location.href = authAppLoginURL(runtimeConfig);
   }
 
   if (me === null) {

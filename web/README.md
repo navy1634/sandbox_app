@@ -21,6 +21,12 @@ NEXT_PUBLIC_APP_RETURN_URL=http://localhost:3000/dashboard
 
 Docker Compose で起動する場合は、ルートディレクトリの `SANDBOX_API_URL` が `NEXT_PUBLIC_API_BASE_URL` に渡されます。
 
+Docker イメージは環境ごとに作り分けません。次の同一コマンドでビルドし、接続先はコンテナ起動時の環境変数または Kubernetes の `ConfigMap` で指定します。
+
+```txt
+docker build . -t sandbox-app-web
+```
+
 sandbox_auth 側では、このアプリの戻り先を許可し、初回登録後のデフォルト戻り先にも指定してください。
 
 ```txt
@@ -45,6 +51,7 @@ pnpm dev
 | `pnpm dev` | Next.js を開発起動します。 |
 | `pnpm build` | Next.js をビルドします。 |
 | `pnpm start` | ビルド済みの Next.js を起動します。 |
+| `pnpm test` | 単体テストを実行します。 |
 | `pnpm lint` | JavaScript と CSS の lint を実行します。 |
 | `pnpm lint:js` | oxlint を実行します。 |
 | `pnpm lint:css` | stylelint を実行します。 |
