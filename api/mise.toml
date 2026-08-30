@@ -17,6 +17,9 @@ run = "go run src/main.go"
 [tasks.install]
 run = "go mod tidy"
 
+[tasks.generate]
+run = "go generate ./src/ent"
+
 [tasks."migrate:up"]
 run = "go tool goose -dir ./migrations postgres \"$DATABASE_URL\" up"
 

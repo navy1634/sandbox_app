@@ -35,6 +35,7 @@ type AppAccountMutation struct {
 	id            *int
 	created_at    *time.Time
 	updated_at    *time.Time
+	oidc_subject  *string
 	email         *string
 	name          *string
 	picture       *string
@@ -220,6 +221,42 @@ func (m *AppAccountMutation) ResetUpdatedAt() {
 	m.updated_at = nil
 }
 
+// SetOidcSubject sets the "oidc_subject" field.
+func (m *AppAccountMutation) SetOidcSubject(s string) {
+	m.oidc_subject = &s
+}
+
+// OidcSubject returns the value of the "oidc_subject" field in the mutation.
+func (m *AppAccountMutation) OidcSubject() (r string, exists bool) {
+	v := m.oidc_subject
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOidcSubject returns the old "oidc_subject" field's value of the AppAccount entity.
+// If the AppAccount object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppAccountMutation) OldOidcSubject(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOidcSubject is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOidcSubject requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOidcSubject: %w", err)
+	}
+	return oldValue.OidcSubject, nil
+}
+
+// ResetOidcSubject resets all changes to the "oidc_subject" field.
+func (m *AppAccountMutation) ResetOidcSubject() {
+	m.oidc_subject = nil
+}
+
 // SetEmail sets the "email" field.
 func (m *AppAccountMutation) SetEmail(s string) {
 	m.email = &s
@@ -362,12 +399,15 @@ func (m *AppAccountMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppAccountMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 6)
 	if m.created_at != nil {
 		fields = append(fields, appaccount.FieldCreatedAt)
 	}
 	if m.updated_at != nil {
 		fields = append(fields, appaccount.FieldUpdatedAt)
+	}
+	if m.oidc_subject != nil {
+		fields = append(fields, appaccount.FieldOidcSubject)
 	}
 	if m.email != nil {
 		fields = append(fields, appaccount.FieldEmail)
@@ -390,6 +430,8 @@ func (m *AppAccountMutation) Field(name string) (ent.Value, bool) {
 		return m.CreatedAt()
 	case appaccount.FieldUpdatedAt:
 		return m.UpdatedAt()
+	case appaccount.FieldOidcSubject:
+		return m.OidcSubject()
 	case appaccount.FieldEmail:
 		return m.Email()
 	case appaccount.FieldName:
@@ -409,6 +451,8 @@ func (m *AppAccountMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldCreatedAt(ctx)
 	case appaccount.FieldUpdatedAt:
 		return m.OldUpdatedAt(ctx)
+	case appaccount.FieldOidcSubject:
+		return m.OldOidcSubject(ctx)
 	case appaccount.FieldEmail:
 		return m.OldEmail(ctx)
 	case appaccount.FieldName:
@@ -437,6 +481,13 @@ func (m *AppAccountMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdatedAt(v)
+		return nil
+	case appaccount.FieldOidcSubject:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOidcSubject(v)
 		return nil
 	case appaccount.FieldEmail:
 		v, ok := value.(string)
@@ -513,6 +564,9 @@ func (m *AppAccountMutation) ResetField(name string) error {
 		return nil
 	case appaccount.FieldUpdatedAt:
 		m.ResetUpdatedAt()
+		return nil
+	case appaccount.FieldOidcSubject:
+		m.ResetOidcSubject()
 		return nil
 	case appaccount.FieldEmail:
 		m.ResetEmail()

@@ -64,6 +64,11 @@ func UpdatedAt(v time.Time) predicate.AppAccount {
 	return predicate.AppAccount(sql.FieldEQ(FieldUpdatedAt, v))
 }
 
+// OidcSubject applies equality check predicate on the "oidc_subject" field. It's identical to OidcSubjectEQ.
+func OidcSubject(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldEQ(FieldOidcSubject, v))
+}
+
 // Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
 func Email(v string) predicate.AppAccount {
 	return predicate.AppAccount(sql.FieldEQ(FieldEmail, v))
@@ -157,6 +162,71 @@ func UpdatedAtLT(v time.Time) predicate.AppAccount {
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.AppAccount {
 	return predicate.AppAccount(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// OidcSubjectEQ applies the EQ predicate on the "oidc_subject" field.
+func OidcSubjectEQ(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldEQ(FieldOidcSubject, v))
+}
+
+// OidcSubjectNEQ applies the NEQ predicate on the "oidc_subject" field.
+func OidcSubjectNEQ(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldNEQ(FieldOidcSubject, v))
+}
+
+// OidcSubjectIn applies the In predicate on the "oidc_subject" field.
+func OidcSubjectIn(vs ...string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldIn(FieldOidcSubject, vs...))
+}
+
+// OidcSubjectNotIn applies the NotIn predicate on the "oidc_subject" field.
+func OidcSubjectNotIn(vs ...string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldNotIn(FieldOidcSubject, vs...))
+}
+
+// OidcSubjectGT applies the GT predicate on the "oidc_subject" field.
+func OidcSubjectGT(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldGT(FieldOidcSubject, v))
+}
+
+// OidcSubjectGTE applies the GTE predicate on the "oidc_subject" field.
+func OidcSubjectGTE(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldGTE(FieldOidcSubject, v))
+}
+
+// OidcSubjectLT applies the LT predicate on the "oidc_subject" field.
+func OidcSubjectLT(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldLT(FieldOidcSubject, v))
+}
+
+// OidcSubjectLTE applies the LTE predicate on the "oidc_subject" field.
+func OidcSubjectLTE(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldLTE(FieldOidcSubject, v))
+}
+
+// OidcSubjectContains applies the Contains predicate on the "oidc_subject" field.
+func OidcSubjectContains(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldContains(FieldOidcSubject, v))
+}
+
+// OidcSubjectHasPrefix applies the HasPrefix predicate on the "oidc_subject" field.
+func OidcSubjectHasPrefix(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldHasPrefix(FieldOidcSubject, v))
+}
+
+// OidcSubjectHasSuffix applies the HasSuffix predicate on the "oidc_subject" field.
+func OidcSubjectHasSuffix(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldHasSuffix(FieldOidcSubject, v))
+}
+
+// OidcSubjectEqualFold applies the EqualFold predicate on the "oidc_subject" field.
+func OidcSubjectEqualFold(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldEqualFold(FieldOidcSubject, v))
+}
+
+// OidcSubjectContainsFold applies the ContainsFold predicate on the "oidc_subject" field.
+func OidcSubjectContainsFold(v string) predicate.AppAccount {
+	return predicate.AppAccount(sql.FieldContainsFold(FieldOidcSubject, v))
 }
 
 // EmailEQ applies the EQ predicate on the "email" field.

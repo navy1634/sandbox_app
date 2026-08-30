@@ -10,8 +10,23 @@ resources:
   - ../../base
 images:
   - name: sandbox-app-api
-    newName: localhost:5000/sandbox_app-api
+    newName: registry.local:5000/sandbox_app-api
     newTag: latest
   - name: sandbox-app-web
-    newName: localhost:5000/sandbox_app-web
+    newName: registry.local:5000/sandbox_app-web
     newTag: latest
+patches:
+  - target:
+      kind: Deployment
+      name: sandbox-app-api
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: IfNotPresent
+  - target:
+      kind: Deployment
+      name: sandbox-app-web
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: IfNotPresent

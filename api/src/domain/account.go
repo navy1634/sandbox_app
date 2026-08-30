@@ -2,11 +2,10 @@ package domain
 
 import "time"
 
-type AuthUser struct {
-	AccountID int64
-	Email     string
-	Name      string
-	Picture   string
+type OIDCUser struct {
+	Subject       string
+	Email         string
+	EmailVerified bool
 }
 
 type AppAccount struct {

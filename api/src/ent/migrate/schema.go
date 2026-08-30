@@ -14,6 +14,7 @@ var (
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "oidc_subject", Type: field.TypeString, Unique: true},
 		{Name: "email", Type: field.TypeString, Default: ""},
 		{Name: "name", Type: field.TypeString, Default: ""},
 		{Name: "picture", Type: field.TypeString, Default: ""},
@@ -27,7 +28,7 @@ var (
 			{
 				Name:    "appaccount_email",
 				Unique:  false,
-				Columns: []*schema.Column{AppAccountsColumns[3]},
+				Columns: []*schema.Column{AppAccountsColumns[4]},
 			},
 		},
 	}

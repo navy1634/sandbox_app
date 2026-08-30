@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authAppLoginURL, type MeResponse } from "@/app/authTypes";
+import { appLoginURL, type MeResponse } from "@/app/authTypes";
 import { useRuntimeConfig } from "@/app/runtimeConfigContext";
 import styles from "../page.module.css";
 
@@ -25,7 +25,7 @@ export default function DashboardPage() {
   }
 
   function login() {
-    window.location.href = authAppLoginURL(runtimeConfig);
+    window.location.href = appLoginURL(runtimeConfig);
   }
 
   if (me === null) {
@@ -50,7 +50,7 @@ export default function DashboardPage() {
           </div>
           <div className={styles.ctas}>
             <button className={styles.primary} type="button" onClick={login}>
-              認証アプリへ進む
+              OIDCでログイン
             </button>
           </div>
         </section>
@@ -63,25 +63,20 @@ export default function DashboardPage() {
       <section className={styles.main}>
         <div className={styles.intro}>
           <p className={styles.label}>Signed in</p>
-          <h1>{me.user.name || me.user.email || `Account ${me.user.accountId}`}</h1>
-          <p>sandbox_auth から返るユーザー情報と、アプリ側 DB の保存結果です。</p>
+          <h1>{me.user.email || me.user.sub}</h1>
+          <p>
+            sandbox_authのOIDC
+            IDトークンから得たユーザー情報と、アプリ側DBの保存結果です。
+          </p>
         </div>
         <dl className={styles.details}>
           <div>
-            <dt>Account ID</dt>
-            <dd>{me.user.accountId}</dd>
+            <dt>Subject</dt>
+            <dd>{me.user.sub}</dd>
           </div>
           <div>
             <dt>Email</dt>
             <dd>{me.user.email || "未設定"}</dd>
-          </div>
-          <div>
-            <dt>Provider</dt>
-            <dd>{me.user.provider || "未設定"}（sandbox_auth からの返却値）</dd>
-          </div>
-          <div>
-            <dt>Registration</dt>
-            <dd>{me.needsRegistration ? "未完了" : "完了"}（sandbox_auth からの返却値）</dd>
           </div>
           <div>
             <dt>Saved account ID</dt>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { authAppLoginURL } from "@/app/authTypes";
+import { appLoginURL } from "@/app/authTypes";
 import { useRuntimeConfig } from "@/app/runtimeConfigContext";
 import styles from "./page.module.css";
 
@@ -9,7 +9,7 @@ export default function Home() {
   const runtimeConfig = useRuntimeConfig();
 
   function login() {
-    window.location.href = authAppLoginURL(runtimeConfig);
+    window.location.href = appLoginURL(runtimeConfig);
   }
 
   return (
@@ -19,13 +19,13 @@ export default function Home() {
           <p className={styles.label}>Auth Sandbox</p>
           <h1>SSO 動作確認アプリ</h1>
           <p>
-            sandbox_auth の認証画面から戻った後に、返ってくるユーザー情報と
+            sandbox_auth のOIDC callbackから戻った後に、返ってくるユーザー情報と
             アプリ側 DB への保存結果を確認できます。
           </p>
         </div>
         <div className={styles.ctas}>
           <button className={styles.primary} type="button" onClick={login}>
-            認証アプリへ進む
+            OIDCでログイン
           </button>
           <Link className={styles.secondary} href="/dashboard">
             セッションを確認する

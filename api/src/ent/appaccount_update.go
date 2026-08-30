@@ -34,6 +34,20 @@ func (_u *AppAccountUpdate) SetUpdatedAt(v time.Time) *AppAccountUpdate {
 	return _u
 }
 
+// SetOidcSubject sets the "oidc_subject" field.
+func (_u *AppAccountUpdate) SetOidcSubject(v string) *AppAccountUpdate {
+	_u.mutation.SetOidcSubject(v)
+	return _u
+}
+
+// SetNillableOidcSubject sets the "oidc_subject" field if the given value is not nil.
+func (_u *AppAccountUpdate) SetNillableOidcSubject(v *string) *AppAccountUpdate {
+	if v != nil {
+		_u.SetOidcSubject(*v)
+	}
+	return _u
+}
+
 // SetEmail sets the "email" field.
 func (_u *AppAccountUpdate) SetEmail(v string) *AppAccountUpdate {
 	_u.mutation.SetEmail(v)
@@ -129,6 +143,9 @@ func (_u *AppAccountUpdate) sqlSave(ctx context.Context) (_node int, err error) 
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(appaccount.FieldUpdatedAt, field.TypeTime, value)
 	}
+	if value, ok := _u.mutation.OidcSubject(); ok {
+		_spec.SetField(appaccount.FieldOidcSubject, field.TypeString, value)
+	}
 	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(appaccount.FieldEmail, field.TypeString, value)
 	}
@@ -161,6 +178,20 @@ type AppAccountUpdateOne struct {
 // SetUpdatedAt sets the "updated_at" field.
 func (_u *AppAccountUpdateOne) SetUpdatedAt(v time.Time) *AppAccountUpdateOne {
 	_u.mutation.SetUpdatedAt(v)
+	return _u
+}
+
+// SetOidcSubject sets the "oidc_subject" field.
+func (_u *AppAccountUpdateOne) SetOidcSubject(v string) *AppAccountUpdateOne {
+	_u.mutation.SetOidcSubject(v)
+	return _u
+}
+
+// SetNillableOidcSubject sets the "oidc_subject" field if the given value is not nil.
+func (_u *AppAccountUpdateOne) SetNillableOidcSubject(v *string) *AppAccountUpdateOne {
+	if v != nil {
+		_u.SetOidcSubject(*v)
+	}
 	return _u
 }
 
@@ -288,6 +319,9 @@ func (_u *AppAccountUpdateOne) sqlSave(ctx context.Context) (_node *AppAccount, 
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(appaccount.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := _u.mutation.OidcSubject(); ok {
+		_spec.SetField(appaccount.FieldOidcSubject, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(appaccount.FieldEmail, field.TypeString, value)

@@ -42,7 +42,9 @@ kubectl -n sandbox-app create secret generic sandbox-app-database-secret \
   --from-literal=POSTGRES_PASSWORD='replace-me'
 
 kubectl -n sandbox-app create secret generic sandbox-app-api-secret \
-  --from-literal=DATABASE_URL='postgres://postgres:replace-me@sandbox-app-database.sandbox-app.svc.cluster.local:5432/test?sslmode=disable'
+  --from-literal=DATABASE_URL='postgres://postgres:replace-me@sandbox-app-database.sandbox-app.svc.cluster.local:5432/test?sslmode=disable' \
+  --from-literal=OIDC_CLIENT_SECRET='replace-with-the-sandbox-auth-client-secret' \
+  --from-literal=APP_AUTH_SECRET='replace-with-at-least-32-bytes'
 
 kubectl -n sandbox-app create secret tls sandbox-app-tls \
   --cert=/path/to/tls.crt \
@@ -82,7 +84,7 @@ kubectl -n sandbox-app create secret tls sandbox-app-tls \
 
 適用する overlay の `api-configmap.yaml`、`web-configmap.yaml`、`ingress.yaml` を編集します。
 
-`AUTH_SERVER_URL` は API から sandbox_auth API へ到達できる URL を指定します。`NEXT_PUBLIC_API_BASE_URL` は同一 origin の API を使う場合は空文字にします。`NEXT_PUBLIC_AUTH_APP_BASE_URL` はブラウザから sandbox_auth web へ到達できる URL を指定します。
+`OIDC_ISSUER_URL` はブラウザから到達できるsandbox_authのIssuer、`OIDC_INTERNAL_URL` はアプリAPIからDiscovery・Token・JWKSへ到達するURLを指定します。`OIDC_REDIRECT_URL` はアプリAPIの公開callback URLです。`NEXT_PUBLIC_API_BASE_URL` は同一originのAPIを使う場合は空文字にします。
 
 ## 適用
 

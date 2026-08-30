@@ -7,5 +7,5 @@ import (
 )
 
 type AccountRepository interface {
-	UpsertFromAuthUser(ctx context.Context, user domain.AuthUser) (domain.AppAccount, error)
+	UpsertFromOIDCUser(ctx context.Context, user domain.OIDCUser) (domain.AppAccount, error)
 }

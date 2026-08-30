@@ -29,15 +29,15 @@ func init() {
 	// appaccount.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	appaccount.UpdateDefaultUpdatedAt = appaccountDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// appaccountDescEmail is the schema descriptor for email field.
-	appaccountDescEmail := appaccountFields[1].Descriptor()
+	appaccountDescEmail := appaccountFields[2].Descriptor()
 	// appaccount.DefaultEmail holds the default value on creation for the email field.
 	appaccount.DefaultEmail = appaccountDescEmail.Default.(string)
 	// appaccountDescName is the schema descriptor for name field.
-	appaccountDescName := appaccountFields[2].Descriptor()
+	appaccountDescName := appaccountFields[3].Descriptor()
 	// appaccount.DefaultName holds the default value on creation for the name field.
 	appaccount.DefaultName = appaccountDescName.Default.(string)
 	// appaccountDescPicture is the schema descriptor for picture field.
-	appaccountDescPicture := appaccountFields[3].Descriptor()
+	appaccountDescPicture := appaccountFields[4].Descriptor()
 	// appaccount.DefaultPicture holds the default value on creation for the picture field.
 	appaccount.DefaultPicture = appaccountDescPicture.Default.(string)
 }

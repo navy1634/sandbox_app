@@ -50,6 +50,12 @@ func (_c *AppAccountCreate) SetNillableUpdatedAt(v *time.Time) *AppAccountCreate
 	return _c
 }
 
+// SetOidcSubject sets the "oidc_subject" field.
+func (_c *AppAccountCreate) SetOidcSubject(v string) *AppAccountCreate {
+	_c.mutation.SetOidcSubject(v)
+	return _c
+}
+
 // SetEmail sets the "email" field.
 func (_c *AppAccountCreate) SetEmail(v string) *AppAccountCreate {
 	_c.mutation.SetEmail(v)
@@ -163,6 +169,9 @@ func (_c *AppAccountCreate) check() error {
 	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "AppAccount.updated_at"`)}
 	}
+	if _, ok := _c.mutation.OidcSubject(); !ok {
+		return &ValidationError{Name: "oidc_subject", err: errors.New(`ent: missing required field "AppAccount.oidc_subject"`)}
+	}
 	if _, ok := _c.mutation.Email(); !ok {
 		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "AppAccount.email"`)}
 	}
@@ -212,6 +221,10 @@ func (_c *AppAccountCreate) createSpec() (*AppAccount, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(appaccount.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
+	}
+	if value, ok := _c.mutation.OidcSubject(); ok {
+		_spec.SetField(appaccount.FieldOidcSubject, field.TypeString, value)
+		_node.OidcSubject = value
 	}
 	if value, ok := _c.mutation.Email(); ok {
 		_spec.SetField(appaccount.FieldEmail, field.TypeString, value)
@@ -286,6 +299,18 @@ func (u *AppAccountUpsert) SetUpdatedAt(v time.Time) *AppAccountUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *AppAccountUpsert) UpdateUpdatedAt() *AppAccountUpsert {
 	u.SetExcluded(appaccount.FieldUpdatedAt)
+	return u
+}
+
+// SetOidcSubject sets the "oidc_subject" field.
+func (u *AppAccountUpsert) SetOidcSubject(v string) *AppAccountUpsert {
+	u.Set(appaccount.FieldOidcSubject, v)
+	return u
+}
+
+// UpdateOidcSubject sets the "oidc_subject" field to the value that was provided on create.
+func (u *AppAccountUpsert) UpdateOidcSubject() *AppAccountUpsert {
+	u.SetExcluded(appaccount.FieldOidcSubject)
 	return u
 }
 
@@ -387,6 +412,20 @@ func (u *AppAccountUpsertOne) SetUpdatedAt(v time.Time) *AppAccountUpsertOne {
 func (u *AppAccountUpsertOne) UpdateUpdatedAt() *AppAccountUpsertOne {
 	return u.Update(func(s *AppAccountUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// SetOidcSubject sets the "oidc_subject" field.
+func (u *AppAccountUpsertOne) SetOidcSubject(v string) *AppAccountUpsertOne {
+	return u.Update(func(s *AppAccountUpsert) {
+		s.SetOidcSubject(v)
+	})
+}
+
+// UpdateOidcSubject sets the "oidc_subject" field to the value that was provided on create.
+func (u *AppAccountUpsertOne) UpdateOidcSubject() *AppAccountUpsertOne {
+	return u.Update(func(s *AppAccountUpsert) {
+		s.UpdateOidcSubject()
 	})
 }
 
@@ -660,6 +699,20 @@ func (u *AppAccountUpsertBulk) SetUpdatedAt(v time.Time) *AppAccountUpsertBulk {
 func (u *AppAccountUpsertBulk) UpdateUpdatedAt() *AppAccountUpsertBulk {
 	return u.Update(func(s *AppAccountUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// SetOidcSubject sets the "oidc_subject" field.
+func (u *AppAccountUpsertBulk) SetOidcSubject(v string) *AppAccountUpsertBulk {
+	return u.Update(func(s *AppAccountUpsert) {
+		s.SetOidcSubject(v)
+	})
+}
+
+// UpdateOidcSubject sets the "oidc_subject" field to the value that was provided on create.
+func (u *AppAccountUpsertBulk) UpdateOidcSubject() *AppAccountUpsertBulk {
+	return u.Update(func(s *AppAccountUpsert) {
+		s.UpdateOidcSubject()
 	})
 }
 

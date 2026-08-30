@@ -24,6 +24,7 @@ func (AppAccount) Annotations() []schema.Annotation {
 func (AppAccount) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int("id").Unique().Immutable(),
+		field.String("oidc_subject").Unique(),
 		field.String("email").Default(""),
 		field.String("name").Default(""),
 		field.String("picture").Default(""),

@@ -3,8 +3,6 @@ package persistence
 import (
 	"context"
 	"fmt"
-	"math"
-	"time"
 
 	"github.com/sandbox-nextjs/src/domain"
 	"github.com/sandbox-nextjs/src/ent"
@@ -18,19 +16,14 @@ func NewEntAccountRepository(client *ent.Client) *EntAccountRepository {
 	return &EntAccountRepository{client: client}
 }
 
-func (r *EntAccountRepository) UpsertFromAuthUser(ctx context.Context, user domain.AuthUser) (domain.AppAccount, error) {
-	if user.AccountID > math.MaxInt || user.AccountID < 1 {
-		return domain.AppAccount{}, fmt.Errorf("auth account id is out of range: %d", user.AccountID)
+func (r *EntAccountRepository) UpsertFromOIDCUser(ctx context.Context, user domain.OIDCUser) (domain.AppAccount, error) {
+	if user.Subject == "" {
+		return domain.AppAccount{}, fmt.Errorf("OIDC subject is required")
 	}
-	accountID := int(user.AccountID)
-	now := time.Now()
 	id, err := r.client.AppAccount.Create().
-		SetID(accountID).
+		SetOidcSubject(user.Subject).
 		SetEmail(user.Email).
-		SetName(user.Name).
-		SetPicture(user.Picture).
-		SetUpdatedAt(now).
-		OnConflictColumns("id").
+		OnConflictColumns("oidc_subject").
 		UpdateNewValues().
 		ID(ctx)
 	if err != nil {

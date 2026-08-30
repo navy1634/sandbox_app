@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	// 設定、SSO クライアント、ルーティングを組み立てて API サーバーを起動する。
+	// 設定、OIDCクライアント、ルーティングを組み立ててAPIサーバーを起動する。
 	cfg, err := config.Load()
 	if err != nil {
 		log.Fatal(err)

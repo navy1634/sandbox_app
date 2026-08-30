@@ -4,5 +4,3 @@ metadata:
   name: sandbox-app-web-config
 data:
   NEXT_PUBLIC_API_BASE_URL: ""
-  NEXT_PUBLIC_AUTH_APP_BASE_URL: "https://auth.sandbox.navy1634.com"
-  NEXT_PUBLIC_APP_RETURN_URL: "https://app.sandbox.navy1634.com/dashboard"

@@ -1,7 +1,7 @@
 # sandbox_app
 
-sandbox_auth の SSO認証を前提とした簡易アプリケーション。
-このアプリケーションは sandbox_auth のログイン画面へ遷移して、認証後に戻ってきた状態を確認する。
+sandbox_authをOIDC Providerとして利用する簡易アプリケーションです。
+このアプリケーションAPIがOIDC callbackを受け、IDトークンを検証してアプリ用セッションを発行します。
 
 ## 構成
 
@@ -14,9 +14,9 @@ sandbox_auth の SSO認証を前提とした簡易アプリケーション。
 
 ## 役割
 
-このアプリケーションは認証ロジックを持ちません。ログイン画面、OAuth、パスキー、セッション発行、ログイン履歴は sandbox_auth の責務です。
+このアプリケーションはOIDCクライアントとして認証します。Google OAuth、パスキー、sandbox_authのログイン画面はsandbox_authの責務です。
 
-このアプリケーションが担当するのは、sandbox_auth から返る認証済みユーザーを確認し、このアプリケーションで必要なユーザー情報を `app_accounts` に保存することです。
+このアプリケーションが担当するのは、OIDC callbackで受け取ったIDトークンを検証し、`sub`をキーにユーザー情報を `app_accounts` へ保存することです。
 
 ## 起動
 
@@ -33,17 +33,24 @@ docker compose up --build
 | `web/README.md` | Web の環境変数、起動方法、画面の説明です。 |
 | `api/README.md` | API の環境変数、migration、エンドポイント、コマンドの説明です。 |
 
-## sandbox_auth 側の設定
+## OIDC設定
 
-sandbox_auth の `ALLOWED_REDIRECT_URLS` には、このアプリケーションの `/dashboard` を許可してください。
+sandbox_authの `OIDC_CLIENTS` に、このアプリケーションのcallback URLを完全一致で登録してください。
 
 ```txt
-ALLOWED_REDIRECT_URLS=http://localhost:3000/mypage,http://localhost:3000/dashboard
-DEFAULT_REDIRECT_URL=http://localhost:3000/dashboard
+OIDC_ISSUER_URL=http://localhost:8080
+OIDC_CLIENTS=[{"client_id":"external-app","client_secret":"replace-with-a-random-secret","redirect_uris":["http://localhost:8081/auth/callback"]}]
+OIDC_REDIRECT_URL=http://localhost:8081/auth/callback
 ```
 
-別の URL でこのアプリケーションを開く場合は、その URL の `/dashboard` を許可してください。
+アプリAPIの `OIDC_ISSUER_URL` はブラウザから到達できるIssuer、`OIDC_INTERNAL_URL` はAPIコンテナからDiscovery・Token・JWKSへ到達するURLです。`APP_AUTH_SECRET` はアプリ専用の32バイト以上の秘密値にしてください。
 
 ## 注意
 
-このアプリケーションの API と sandbox_auth API を同じホストで同じポートに起動することはできません。ポートを変更する場合は、`AUTH_SERVER_URL` と `NEXT_PUBLIC_API_BASE_URL` も合わせて変更してください。
+ローカルComposeではsandbox_auth APIを8080、sandbox_app APIを8081で公開します。ポートを変更する場合は、OIDCの `OIDC_REDIRECT_URL`、sandbox_auth側の `redirect_uris`、Webの `NEXT_PUBLIC_API_BASE_URL` を同じcallback構成に合わせてください。
+
+```txt
+192.168.0.100 registry.local
+192.168.0.242 auth.sandbox.navy1634.com
+192.168.0.242 app.sandbox.navy1634.com
+```
